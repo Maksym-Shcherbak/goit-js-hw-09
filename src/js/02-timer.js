@@ -6,10 +6,10 @@ require('flatpickr/dist/themes/dark.css');
 
 const refs = {
   startBtn: document.querySelector('button[data-start]'),
-  daysOutput: document.querySelector('span[data-days]'),
-  hoursOutput: document.querySelector('span[data-hours]'),
-  minutesOutput: document.querySelector('span[data-minutes]'),
-  secondsOutput: document.querySelector('span[data-seconds]'),
+  // daysOutput: document.querySelector('span[data-days]'),
+  //hoursOutput: document.querySelector('span[data-hours]'),
+  // minutesOutput: document.querySelector('span[data-minutes]'),
+  ///secondsOutput: document.querySelector('span[data-seconds]'),
   valueOutput: document.querySelectorAll('.value'),
 };
 let dateForTimer = null;
@@ -43,14 +43,16 @@ function onStartTimer() {
   isCountdownRun = true;
   timerId = setInterval(() => {
     const leftTime = dateForTimer.getTime() - Date.now();
-    const { days, hours, minutes, seconds } = convertMs(leftTime);
+    const timer = convertMs(leftTime);
     // refs.daysOutput.textContent = addLeadingZero(days);
     // refs.hoursOutput.textContent = addLeadingZero(hours);
     // refs.minutesOutput.textContent = addLeadingZero(minutes);
     // refs.secondsOutput.textContent = addLeadingZero(seconds);
-    refs.valueOutput.forEach(
-      value => (value.textContent = addLeadingZero(value.dataset[time]))
-    );
+    const arrayFromSpan = [...refs.valueOutput];
+    const timeValues = Object.values(timer);
+    for (let i = 0; i < arrayFromSpan.length; i += 1) {
+      setValueInOutput(arrayFromSpan[i], timeValues[i]);
+    }
   }, 1000);
 }
 
@@ -73,8 +75,8 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-function setValueInOutput(obj, array) {
-  array.forEach(item => (item.textContent = 'obj'));
+function setValueInOutput(elem, value) {
+  elem.textContent = addLeadingZero(value);
 }
 
 function addLeadingZero(value) {
