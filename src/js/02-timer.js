@@ -15,9 +15,6 @@ const refs = {
 
 refs.startBtn.disabled = true;
 
-// let dateForTimer = null;
-// let isCountdownRun = false;
-
 class Countdown {
   constructor({ updateValueOnPage, stopCountdown }) {
     this.dateForTimer = null;
@@ -44,7 +41,6 @@ class Countdown {
         this.updateValueOnPage(arrayFromSpan[i], timeValues[i]);
       }
     }, 1000);
-    console.log(this.countdownId);
   }
 }
 
@@ -104,7 +100,6 @@ function addLeadingZero(value) {
 
 function stopCountdown(time, countdown) {
   if (Math.floor(time / 1000) === 0) {
-    console.log(countdown);
     clearInterval(countdown);
     myCountdown.isCountdownRun = false;
   }
