@@ -64,20 +64,9 @@ const options = {
     if (myCountdown.dateForTimer <= Date.now()) {
       refs.startBtn.disabled = true;
       return Notify.failure('Please choose a date in the future', {
-        width: '1000px',
+        width: '350px',
         position: 'center-top', // 'right-top' - 'right-bottom' - 'left-top' - 'left-bottom' - 'center-top' - 'center-bottom' - 'center-center'
-        distance: '10px',
-        opacity: 1,
-        borderRadius: '5px',
-        rtl: false,
-        timeout: 8000,
-        messageMaxLength: 110,
-        backOverlay: false,
-        backOverlayColor: 'rgba(0,0,0,0.5)',
-        plainText: true,
-        showOnlyTheLastOne: false,
-        clickToClose: false,
-        pauseOnHover: true,
+        timeout: 4000,
       });
     }
     refs.startBtn.disabled = false;

@@ -1,5 +1,6 @@
 import Notiflix from 'notiflix';
 import throttle from 'lodash.throttle';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const formForCreatePromises = document.querySelector('.form');
 
@@ -85,9 +86,9 @@ function setObjectValue(input, object, dataFromLocaleStorage) {
 }
 
 function onSucces({ position, delay }) {
-  Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+  Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
 }
 
 function onError({ position, delay }) {
-  Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+  Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
 }
