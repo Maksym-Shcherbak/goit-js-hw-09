@@ -3,24 +3,23 @@ import throttle from 'lodash.throttle';
 
 const formForCreatePromises = document.querySelector('.form');
 
-formForCreatePromises.addEventListener('submit', onCreatePromises);
-formForCreatePromises.addEventListener(
-  'input',
-  throttle(savePromisesValues, 1000)
-);
-
 const STORAGE_KEY = 'userDataPromise';
 let promiseData = {};
 const {
   elements: { delay, step, amount },
 } = formForCreatePromises;
 
+formForCreatePromises.addEventListener('submit', onCreatePromises);
+formForCreatePromises.addEventListener(
+  'input',
+  throttle(savePromisesValues, 1000)
+);
+
 restorePromisesInputs();
 
 function savePromisesValues(e) {
   promiseData[e.target.name] = e.target.value;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(promiseData));
-  console.log(promiseData);
 }
 
 function restorePromisesInputs() {
@@ -43,6 +42,10 @@ function onCreatePromises(e) {
     delayValue += stepValue;
   }
   e.currentTarget.reset();
+  resetValues();
+}
+
+function resetValues() {
   promiseData = {};
   localStorage.removeItem(STORAGE_KEY);
 }

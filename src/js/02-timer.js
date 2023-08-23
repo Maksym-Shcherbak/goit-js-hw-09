@@ -1,7 +1,7 @@
 import flatpickr from 'flatpickr';
 // Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
-import Notiflix from 'notiflix';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 require('flatpickr/dist/themes/dark.css');
 
 const refs = {
@@ -63,7 +63,22 @@ const options = {
     myCountdown.dateForTimer = selectedDates[0];
     if (myCountdown.dateForTimer <= Date.now()) {
       refs.startBtn.disabled = true;
-      return Notiflix.Notify.failure('Please choose a date in the future');
+      return Notify.failure('Please choose a date in the future', {
+        width: '1000px',
+        position: 'center-top', // 'right-top' - 'right-bottom' - 'left-top' - 'left-bottom' - 'center-top' - 'center-bottom' - 'center-center'
+        distance: '10px',
+        opacity: 1,
+        borderRadius: '5px',
+        rtl: false,
+        timeout: 8000,
+        messageMaxLength: 110,
+        backOverlay: false,
+        backOverlayColor: 'rgba(0,0,0,0.5)',
+        plainText: true,
+        showOnlyTheLastOne: false,
+        clickToClose: false,
+        pauseOnHover: true,
+      });
     }
     refs.startBtn.disabled = false;
   },
