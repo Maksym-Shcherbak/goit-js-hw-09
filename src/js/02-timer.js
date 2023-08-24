@@ -7,9 +7,9 @@ require('flatpickr/dist/themes/dark.css');
 const refs = {
   startBtn: document.querySelector('button[data-start]'),
   // daysOutput: document.querySelector('span[data-days]'),
-  //hoursOutput: document.querySelector('span[data-hours]'),
+  // hoursOutput: document.querySelector('span[data-hours]'),
   // minutesOutput: document.querySelector('span[data-minutes]'),
-  ///secondsOutput: document.querySelector('span[data-seconds]'),
+  // secondsOutput: document.querySelector('span[data-seconds]'),
   valueOutput: document.querySelectorAll('.value'),
 };
 
@@ -30,11 +30,14 @@ class Countdown {
     this.countdownId = setInterval(() => {
       const leftTime = this.dateForTimer.getTime() - Date.now();
       this.onStopCountdown(leftTime, this.countdownId);
+      if (!this.isCountdownRun) {
+        return;
+      }
       const timer = convertMs(leftTime);
-      // refs.daysOutput.textContent = addLeadingZero(days);
-      // refs.hoursOutput.textContent = addLeadingZero(hours);
-      // refs.minutesOutput.textContent = addLeadingZero(minutes);
-      // refs.secondsOutput.textContent = addLeadingZero(seconds);
+      // refs.daysOutput.textContent = addLeadingZero(timer.days);
+      // refs.hoursOutput.textContent = addLeadingZero(timer.hours);
+      // refs.minutesOutput.textContent = addLeadingZero(timer.minutes);
+      // refs.secondsOutput.textContent = addLeadingZero(timer.seconds);
       const arrayFromSpan = [...refs.valueOutput];
       const timeValues = Object.values(timer);
       for (let i = 0; i < arrayFromSpan.length; i += 1) {
@@ -103,7 +106,8 @@ function addLeadingZero(value) {
 }
 
 function stopCountdown(time, countdown) {
-  if (Math.floor(time / 1000) === 0) {
+  //console.log(Math.floor(time / 1000));
+  if (Math.floor(time / 1000) <= 0) {
     clearInterval(countdown);
     myCountdown.isCountdownRun = false;
   }
