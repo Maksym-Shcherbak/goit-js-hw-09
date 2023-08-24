@@ -38,7 +38,7 @@ function restorePromisesInputs() {
 function onCreatePromises(e) {
   e.preventDefault();
   let { delayValue, stepValue, amountValue } = getValuesFromForm();
-  for (i = 1; i <= amountValue; i += 1) {
+  for (let i = 1; i <= amountValue; i += 1) {
     createPromise(i, delayValue).then(onSucces).catch(onError);
     delayValue += stepValue;
   }
