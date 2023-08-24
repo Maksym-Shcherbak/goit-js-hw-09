@@ -6,15 +6,12 @@ require('flatpickr/dist/themes/dark.css');
 
 const refs = {
   startBtn: document.querySelector('button[data-start]'),
-  // daysOutput: document.querySelector('span[data-days]'),
-  // hoursOutput: document.querySelector('span[data-hours]'),
-  // minutesOutput: document.querySelector('span[data-minutes]'),
-  // secondsOutput: document.querySelector('span[data-seconds]'),
   valueOutput: document.querySelectorAll('.value'),
 };
 
 refs.startBtn.disabled = true;
 
+// Створений клас таймеру//
 class Countdown {
   constructor({ updateValueOnPage, stopCountdown }) {
     this.dateForTimer = null;
@@ -28,20 +25,15 @@ class Countdown {
     refs.startBtn.disabled = true;
     this.isCountdownRun = true;
     this.countdownId = setInterval(() => {
-      const leftTime = this.dateForTimer.getTime() - Date.now();
-      this.onStopCountdown(leftTime, this.countdownId);
-      if (!this.isCountdownRun) {
-        return;
-      }
+      const leftTime = this.dateForTimer - Date.now();
+      console.log(leftTime);
       const timer = convertMs(leftTime);
-      // refs.daysOutput.textContent = addLeadingZero(timer.days);
-      // refs.hoursOutput.textContent = addLeadingZero(timer.hours);
-      // refs.minutesOutput.textContent = addLeadingZero(timer.minutes);
-      // refs.secondsOutput.textContent = addLeadingZero(timer.seconds);
       const arrayFromSpan = [...refs.valueOutput];
       const timeValues = Object.values(timer);
-      for (let i = 0; i < arrayFromSpan.length; i += 1) {
-        this.updateValueOnPage(arrayFromSpan[i], timeValues[i]);
+      this.updateValueOnPage(arrayFromSpan, timeValues);
+      this.onStopCountdown(leftTime, this.countdownId);
+      if (!this.isCountdownRun) {
+        this.updateValueOnPage(arrayFromSpan, 0);
       }
     }, 1000);
   }
@@ -63,7 +55,7 @@ const options = {
     if (myCountdown.isCountdownRun) {
       return;
     }
-    myCountdown.dateForTimer = selectedDates[0];
+    myCountdown.dateForTimer = selectedDates[0].getTime();
     if (myCountdown.dateForTimer <= Date.now()) {
       refs.startBtn.disabled = true;
       return Notify.failure('Please choose a date in the future', {
@@ -97,8 +89,14 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-function setValueInOutput(elem, value) {
-  elem.textContent = addLeadingZero(value);
+function setValueInOutput(elemArr, value) {
+  for (let i = 0; i < elemArr.length; i += 1) {
+    if (Array.isArray(value)) {
+      elemArr[i].textContent = addLeadingZero(value[i]);
+    } else {
+      elemArr[i].textContent = addLeadingZero(value);
+    }
+  }
 }
 
 function addLeadingZero(value) {

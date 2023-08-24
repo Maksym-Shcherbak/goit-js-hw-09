@@ -68,4 +68,5 @@ button:disabled {
   background-color: #e2d8c4;
   transform: none;
   box-shadow: none;
+  cursor: default;
 }
